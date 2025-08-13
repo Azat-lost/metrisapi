@@ -1,18 +1,12 @@
 {
   "openapi": "3.1.0",
-  "info": {
-    "title": "Metris Pro Full API",
-    "version": "2.1.0",
-    "description": "Поиск квартир, карточка квартиры (планировки/фото) и карточка ЖК (название/описание/застройщик). Ответы сервера могут приходить с content-type text/html, но содержат JSON."
-  },
-  "servers": [
-    { "url": "https://metris.pro" }
-  ],
+  "info": { "title": "Metris Minimal API", "version": "1.0.0" },
+  "servers": [{ "url": "https://metris.pro" }],
   "paths": {
     "/local/components/metris_main/building_list/ajax/getFlats.php": {
       "post": {
         "operationId": "getFlats",
-        "summary": "Поиск квартир по фильтрам",
+        "summary": "Поиск квартир",
         "requestBody": {
           "required": false,
           "content": {
@@ -20,14 +14,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "city":        { "type": "string",  "example": "10258225_0", "description": "ID города (Уфа = 10258225_0)" },
-                  "room_count":  { "type": "string",  "example": "2",          "description": "Количество комнат (например: 1, 2, 3)" },
-                  "price_min":   { "type": "integer", "example": 0 },
-                  "price_max":   { "type": "integer", "example": 10000000 },
-                  "space_min":   { "type": "number",  "example": 0 },
-                  "space_max":   { "type": "number",  "example": 200 },
-                  "limit":       { "type": "integer", "example": 50 },
-                  "offset":      { "type": "integer", "example": 0 }
+                  "city": { "type": "string", "example": "10258225_0" },
+                  "room_count": { "type": "string", "example": "2" },
+                  "limit": { "type": "integer", "example": 50 },
+                  "offset": { "type": "integer", "example": 0 },
+                  "price_min": { "type": "integer", "example": 0 },
+                  "price_max": { "type": "integer", "example": 10000000 }
                 },
                 "additionalProperties": true
               }
@@ -36,10 +28,10 @@
         },
         "responses": {
           "200": {
-            "description": "JSON со списком квартир (возможен content-type text/html)",
+            "description": "JSON (может прийти с text/html)",
             "content": {
-              "application/json": { "schema": { "type": "object", "properties": {}, "additionalProperties": true } },
-              "text/html":        { "schema": { "type": "object", "properties": {}, "additionalProperties": true } }
+              "application/json": { "schema": { "type": "object", "additionalProperties": true } },
+              "text/html":        { "schema": { "type": "object", "additionalProperties": true } }
             }
           }
         }
@@ -48,7 +40,7 @@
     "/local/components/metris_main/building_list/ajax/getFlatCard.php": {
       "post": {
         "operationId": "getFlatCard",
-        "summary": "Карточка квартиры (планировки, фото, детали)",
+        "summary": "Карточка квартиры (планировки/фото)",
         "requestBody": {
           "required": true,
           "content": {
@@ -63,10 +55,10 @@
         },
         "responses": {
           "200": {
-            "description": "JSON с деталями квартиры и ссылками на планировки/фото",
+            "description": "JSON (может прийти с text/html)",
             "content": {
-              "application/json": { "schema": { "type": "object", "properties": {}, "additionalProperties": true } },
-              "text/html":        { "schema": { "type": "object", "properties": {}, "additionalProperties": true } }
+              "application/json": { "schema": { "type": "object", "additionalProperties": true } },
+              "text/html":        { "schema": { "type": "object", "additionalProperties": true } }
             }
           }
         }
@@ -75,7 +67,7 @@
     "/local/components/metris_main/building_list/ajax/getTariffCard.php": {
       "post": {
         "operationId": "getComplexCard",
-        "summary": "Карточка ЖК (название, застройщик, описание/сроки)",
+        "summary": "Карточка ЖК (название/описание/застройщик)",
         "requestBody": {
           "required": true,
           "content": {
@@ -90,10 +82,10 @@
         },
         "responses": {
           "200": {
-            "description": "JSON с данными ЖК",
+            "description": "JSON (может прийти с text/html)",
             "content": {
-              "application/json": { "schema": { "type": "object", "properties": {}, "additionalProperties": true } },
-              "text/html":        { "schema": { "type": "object", "properties": {}, "additionalProperties": true } }
+              "application/json": { "schema": { "type": "object", "additionalProperties": true } },
+              "text/html":        { "schema": { "type": "object", "additionalProperties": true } }
             }
           }
         }
