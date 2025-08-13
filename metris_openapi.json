@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Metris Pro Full API",
-    "version": "2.0.0",
-    "description": "Полное неофициальное API Metris.pro для поиска квартир, получения планировок, фото и информации о ЖК."
+    "version": "2.0.1",
+    "description": "Полное API для поиска квартир, получения информации о ЖК, планировок и фото."
   },
   "servers": [
     {
@@ -15,7 +15,7 @@
       "post": {
         "operationId": "getFlats",
         "summary": "Поиск квартир",
-        "description": "Возвращает список квартир по фильтрам.",
+        "description": "Возвращает список квартир по фильтрам",
         "requestBody": {
           "required": false,
           "content": {
@@ -29,7 +29,7 @@
                   "price_max": { "type": "integer", "example": 8000000 },
                   "space_min": { "type": "number", "example": 30 },
                   "space_max": { "type": "number", "example": 80 },
-                  "limit": { "type": "integer", "example": 10 },
+                  "limit": { "type": "integer", "example": 5 },
                   "offset": { "type": "integer", "example": 0 }
                 }
               }
@@ -41,7 +41,26 @@
             "description": "Список квартир",
             "content": {
               "application/json": {
-                "schema": { "type": "object", "additionalProperties": true }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "flat_id": { "type": "string" },
+                          "complex_id": { "type": "string" },
+                          "name": { "type": "string" },
+                          "rooms": { "type": "integer" },
+                          "space": { "type": "number" },
+                          "price_discount": { "type": "number" },
+                          "floor": { "type": "integer" }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -51,8 +70,8 @@
     "/local/components/metris_main/building_list/ajax/getFlatCard.php": {
       "post": {
         "operationId": "getFlatCard",
-        "summary": "Информация по квартире",
-        "description": "Возвращает детальную информацию по квартире, включая планировки и фото.",
+        "summary": "Детали квартиры",
+        "description": "Возвращает полную информацию по квартире: планировки, фото, описание",
         "requestBody": {
           "required": true,
           "content": {
@@ -72,7 +91,21 @@
             "description": "Детальная информация о квартире",
             "content": {
               "application/json": {
-                "schema": { "type": "object", "additionalProperties": true }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "flat_id": { "type": "string" },
+                    "space": { "type": "number" },
+                    "rooms": { "type": "integer" },
+                    "price_discount": { "type": "number" },
+                    "floor": { "type": "integer" },
+                    "plan_images": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "description": { "type": "string" }
+                  }
+                }
               }
             }
           }
@@ -83,7 +116,7 @@
       "post": {
         "operationId": "getComplexCard",
         "summary": "Информация о ЖК",
-        "description": "Возвращает название, описание и застройщика по complex_id.",
+        "description": "Возвращает название, описание и застройщика по complex_id",
         "requestBody": {
           "required": true,
           "content": {
@@ -103,7 +136,15 @@
             "description": "Информация о ЖК",
             "content": {
               "application/json": {
-                "schema": { "type": "object", "additionalProperties": true }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "complex_id": { "type": "string" },
+                    "complex_name": { "type": "string" },
+                    "developer": { "type": "string" },
+                    "description": { "type": "string" }
+                  }
+                }
               }
             }
           }
