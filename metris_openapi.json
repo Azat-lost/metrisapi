@@ -1,0 +1,69 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Metris Flats API",
+    "version": "1.1.0",
+    "description": "API для получения списка квартир с сайта Metris.pro с возможностью фильтрации по городу, цене и количеству комнат"
+  },
+  "servers": [
+    {
+      "url": "https://metris.pro"
+    }
+  ],
+  "paths": {
+    "/local/components/metris_main/building_list/ajax/getFlats.php": {
+      "post": {
+        "summary": "Получить список квартир с фильтрами",
+        "description": "Возвращает список квартир в JSON-формате",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "city": {
+                    "type": "string",
+                    "example": "10258225_0",
+                    "description": "ID города (может быть несколько через запятую)"
+                  },
+                  "price_min": {
+                    "type": "integer",
+                    "example": 3000000,
+                    "description": "Минимальная цена"
+                  },
+                  "price_max": {
+                    "type": "integer",
+                    "example": 8000000,
+                    "description": "Максимальная цена"
+                  },
+                  "room_count": {
+                    "type": "string",
+                    "example": "1,2,3",
+                    "description": "Количество комнат (перечисление через запятую)"
+                  },
+                  "space_min": {
+                    "type": "integer",
+                    "example": 30,
+                    "description": "Минимальная площадь в м²"
+                  },
+                  "space_max": {
+                    "type": "integer",
+                    "example": 80,
+                    "description": "Максимальная площадь в м²"
+                  }
+                },
+                "required": ["city"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Список квартир в JSON"
+          }
+        }
+      }
+    }
+  }
+}
