@@ -1,6 +1,6 @@
 {
   "openapi": "3.1.0",
-  "info": { "title": "Metris Minimal API", "version": "1.0.0" },
+  "info": { "title": "Metris Minimal API", "version": "1.0.1" },
   "servers": [{ "url": "https://metris.pro" }],
   "paths": {
     "/local/components/metris_main/building_list/ajax/getFlats.php": {
@@ -14,12 +14,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "city": { "type": "string", "example": "10258225_0" },
-                  "room_count": { "type": "string", "example": "2" },
-                  "limit": { "type": "integer", "example": 50 },
-                  "offset": { "type": "integer", "example": 0 },
-                  "price_min": { "type": "integer", "example": 0 },
-                  "price_max": { "type": "integer", "example": 10000000 }
+                  "city":        { "type": "string",  "example": "10258225_0" },
+                  "room_count":  { "type": "string",  "example": "2" },
+                  "limit":       { "type": "integer", "example": 200 },
+                  "offset":      { "type": "integer", "example": 0 },
+                  "price_min":   { "type": "integer", "example": 0 },
+                  "price_max":   { "type": "integer", "example": 10000000 }
                 },
                 "additionalProperties": true
               }
@@ -28,10 +28,10 @@
         },
         "responses": {
           "200": {
-            "description": "JSON (может прийти с text/html)",
+            "description": "JSON со списком квартир (иногда приходит с content-type text/html)",
             "content": {
-              "application/json": { "schema": { "type": "object", "additionalProperties": true } },
-              "text/html":        { "schema": { "type": "object", "additionalProperties": true } }
+              "application/json": { "schema": { "type": "object", "properties": {}, "additionalProperties": true } },
+              "text/html":        { "schema": { "type": "object", "properties": {}, "additionalProperties": true } }
             }
           }
         }
@@ -40,14 +40,16 @@
     "/local/components/metris_main/building_list/ajax/getTariffCard.php": {
       "post": {
         "operationId": "getComplexCard",
-        "summary": "Карточка ЖК (название/описание/застройщик/сроки)",
+        "summary": "Карточка ЖК (название/застройщик/сроки)",
         "requestBody": {
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
                 "type": "object",
-                "properties": { "complex_id": { "type": "string", "example": "2813" } },
+                "properties": {
+                  "complex_id": { "type": "string", "example": "2813" }
+                },
                 "required": ["complex_id"]
               }
             }
@@ -55,10 +57,10 @@
         },
         "responses": {
           "200": {
-            "description": "JSON (может прийти с text/html)",
+            "description": "JSON с данными ЖК (иногда приходит с content-type text/html)",
             "content": {
-              "application/json": { "schema": { "type": "object", "additionalProperties": true } },
-              "text/html":        { "schema": { "type": "object", "additionalProperties": true } }
+              "application/json": { "schema": { "type": "object", "properties": {}, "additionalProperties": true } },
+              "text/html":        { "schema": { "type": "object", "properties": {}, "additionalProperties": true } }
             }
           }
         }
