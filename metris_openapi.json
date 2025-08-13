@@ -1,9 +1,9 @@
 {
-  "openapi": "3.0.0",
+  "openapi": "3.1.0",
   "info": {
-    "title": "Metris Flats API",
-    "version": "1.1.0",
-    "description": "API для получения списка квартир с сайта Metris.pro с возможностью фильтрации по городу, цене и количеству комнат"
+    "title": "Metris Pro Full API",
+    "version": "2.0.0",
+    "description": "Полное неофициальное API Metris.pro для поиска квартир, получения планировок, фото и информации о ЖК."
   },
   "servers": [
     {
@@ -13,8 +13,46 @@
   "paths": {
     "/local/components/metris_main/building_list/ajax/getFlats.php": {
       "post": {
-        "summary": "Получить список квартир с фильтрами",
-        "description": "Возвращает список квартир в JSON-формате",
+        "operationId": "getFlats",
+        "summary": "Поиск квартир",
+        "description": "Возвращает список квартир по фильтрам.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "city": { "type": "string", "example": "10258225_0" },
+                  "room_count": { "type": "string", "example": "1,2,3" },
+                  "price_min": { "type": "integer", "example": 3000000 },
+                  "price_max": { "type": "integer", "example": 8000000 },
+                  "space_min": { "type": "number", "example": 30 },
+                  "space_max": { "type": "number", "example": 80 },
+                  "limit": { "type": "integer", "example": 10 },
+                  "offset": { "type": "integer", "example": 0 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Список квартир",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "additionalProperties": true }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/local/components/metris_main/building_list/ajax/getFlatCard.php": {
+      "post": {
+        "operationId": "getFlatCard",
+        "summary": "Информация по квартире",
+        "description": "Возвращает детальную информацию по квартире, включая планировки и фото.",
         "requestBody": {
           "required": true,
           "content": {
@@ -22,45 +60,52 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "city": {
-                    "type": "string",
-                    "example": "10258225_0",
-                    "description": "ID города (может быть несколько через запятую)"
-                  },
-                  "price_min": {
-                    "type": "integer",
-                    "example": 3000000,
-                    "description": "Минимальная цена"
-                  },
-                  "price_max": {
-                    "type": "integer",
-                    "example": 8000000,
-                    "description": "Максимальная цена"
-                  },
-                  "room_count": {
-                    "type": "string",
-                    "example": "1,2,3",
-                    "description": "Количество комнат (перечисление через запятую)"
-                  },
-                  "space_min": {
-                    "type": "integer",
-                    "example": 30,
-                    "description": "Минимальная площадь в м²"
-                  },
-                  "space_max": {
-                    "type": "integer",
-                    "example": 80,
-                    "description": "Максимальная площадь в м²"
-                  }
+                  "flat_id": { "type": "string", "example": "123456" }
                 },
-                "required": ["city"]
+                "required": ["flat_id"]
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Список квартир в JSON"
+            "description": "Детальная информация о квартире",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "additionalProperties": true }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/local/components/metris_main/building_list/ajax/getTariffCard.php": {
+      "post": {
+        "operationId": "getComplexCard",
+        "summary": "Информация о ЖК",
+        "description": "Возвращает название, описание и застройщика по complex_id.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "complex_id": { "type": "string", "example": "98765" }
+                },
+                "required": ["complex_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Информация о ЖК",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "additionalProperties": true }
+              }
+            }
           }
         }
       }
