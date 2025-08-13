@@ -1,6 +1,6 @@
 {
   "openapi": "3.1.0",
-  "info": { "title": "Metris Minimal API", "version": "1.0.1" },
+  "info": { "title": "Metris Minimal API (fixed)", "version": "1.0.2" },
   "servers": [{ "url": "https://metris.pro" }],
   "paths": {
     "/local/components/metris_main/building_list/ajax/getFlats.php": {
@@ -28,10 +28,15 @@
         },
         "responses": {
           "200": {
-            "description": "JSON со списком квартир (иногда приходит с content-type text/html)",
+            "description": "Ответ со списком квартир",
             "content": {
-              "application/json": { "schema": { "type": "object", "properties": {}, "additionalProperties": true } },
-              "text/html":        { "schema": { "type": "object", "properties": {}, "additionalProperties": true } }
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean", "nullable": true } },
+                  "additionalProperties": true
+                }
+              }
             }
           }
         }
@@ -57,10 +62,15 @@
         },
         "responses": {
           "200": {
-            "description": "JSON с данными ЖК (иногда приходит с content-type text/html)",
+            "description": "Ответ с данными ЖК",
             "content": {
-              "application/json": { "schema": { "type": "object", "properties": {}, "additionalProperties": true } },
-              "text/html":        { "schema": { "type": "object", "properties": {}, "additionalProperties": true } }
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean", "nullable": true } },
+                  "additionalProperties": true
+                }
+              }
             }
           }
         }
