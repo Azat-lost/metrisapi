@@ -37,37 +37,10 @@
         }
       }
     },
-    "/local/components/metris_main/building_list/ajax/getFlatCard.php": {
-      "post": {
-        "operationId": "getFlatCard",
-        "summary": "Карточка квартиры (планировки/фото)",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "properties": { "flat_id": { "type": "string", "example": "6850095" } },
-                "required": ["flat_id"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "JSON (может прийти с text/html)",
-            "content": {
-              "application/json": { "schema": { "type": "object", "additionalProperties": true } },
-              "text/html":        { "schema": { "type": "object", "additionalProperties": true } }
-            }
-          }
-        }
-      }
-    },
     "/local/components/metris_main/building_list/ajax/getTariffCard.php": {
       "post": {
         "operationId": "getComplexCard",
-        "summary": "Карточка ЖК (название/описание/застройщик)",
+        "summary": "Карточка ЖК (название/описание/застройщик/сроки)",
         "requestBody": {
           "required": true,
           "content": {
